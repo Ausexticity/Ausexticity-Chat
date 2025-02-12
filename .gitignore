@@ -27,3 +27,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw? 
+
+# vite
+.vite
+.vite/deps
+
+
+# npm
+build

@@ -37,11 +37,11 @@ export default function Sidebar({
     return (
         <aside className="h-full flex flex-col">
             {/* 品牌標誌 */}
-            <a href="https://ausexticity.com" rel="noopener noreferrer">
+            <a href="/" rel="noopener noreferrer">
                 <div className="p-4 border-b border-gray-200">
                     <div className="flex items-center gap-2">
-                        <img src="/image/header_logo.svg" alt="Logo" className="h-8 w-8" />
-                        <img src="/image/ausexticity.svg" alt="Ausexticity" className="h-4" />
+                        <img src="/images/header_logo.svg" alt="Logo" className="h-8 w-8" />
+                        <img src="/images/ausexticity.svg" alt="Ausexticity" className="h-4" />
                     </div>
                 </div>
             </a>
