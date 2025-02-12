@@ -34,7 +34,7 @@ const EmptyState = (props) => {
     return (
         <div className="flex flex-col items-center justify-center min-h-full p-4 md:p-8">
             <div className="text-center space-y-2 mb-6">
-                <h2 className="text-xl md:text-2xl font-bold text-gray-800">歡迎來到感情諮詢室！</h2>
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800">歡迎來到 AI 諮詢室！</h2>
                 <p className="text-sm md:text-base text-gray-600">選擇以下話題開始對話，或直接輸入您感興趣的問題</p>
             </div>
 
