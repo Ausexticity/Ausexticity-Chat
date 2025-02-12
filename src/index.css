@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .message-bubble {
+        @apply rounded-lg p-4 max-w-[80%] break-words;
+    }
+
+    .user-message {
+        @apply message-bubble bg-primary-100 ml-auto;
+    }
+
+    .ai-message {
+        @apply message-bubble bg-white mr-auto;
+    }
+
+    .tab-button {
+        @apply px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md transition-colors;
+    }
+
+    .tab-button-active {
+        @apply bg-primary-50 text-primary-600;
+    }
+}
