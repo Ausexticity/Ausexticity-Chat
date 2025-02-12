@@ -108,6 +108,6 @@ VITE_API_BASE_URL=你的API地址
 2. 遵循現有的代碼風格
 3. 更新相關文檔
 
-## �� 開源協議
+## 🔓 開源協議
 
 MIT License
