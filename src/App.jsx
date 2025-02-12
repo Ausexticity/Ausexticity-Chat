@@ -18,18 +18,22 @@ function App() {
         const newId = conversations.length + 1
         setConversations([...conversations, { id: newId, title: '新對話', messages: [] }])
         setCurrentConversationId(newId)
-        setIsSidebarOpen(false) // 在手機版新增對話後自動關閉側邊欄
+        setIsSidebarOpen(false)
     }
 
     const handleConversationSelect = (id) => {
         setCurrentConversationId(id)
-        setIsSidebarOpen(false) // 在手機版選擇對話後自動關閉側邊欄
+        setIsSidebarOpen(false)
     }
 
     const sendMessage = async (message, useWeb, useRag) => {
         if (chatAreaRef.current) {
             await chatAreaRef.current.handleNewMessage(message, selectedModel, useWeb, useRag);
         }
+    }
+
+    const handleTopicSelect = (topic) => {
+        sendMessage(topic, false, false)
     }
 
     return (
@@ -77,7 +81,7 @@ function App() {
                 <div className="flex-1 flex flex-col h-[calc(100vh-4rem)] mt-16 w-full mx-auto">
                     {/* 可滾動的聊天內容區 */}
                     <div className="flex-1 overflow-y-auto w-full">
-                        <ChatArea ref={chatAreaRef} />
+                        <ChatArea ref={chatAreaRef} onTopicSelect={handleTopicSelect} />
                     </div>
 
                     {/* 固定在底部的輸入框 */}
@@ -90,4 +94,4 @@ function App() {
     )
 }
 
-export default App 
+export default App

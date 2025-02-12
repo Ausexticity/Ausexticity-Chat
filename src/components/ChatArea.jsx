@@ -3,6 +3,63 @@ import ReactMarkdown from 'react-markdown'
 import classNames from 'classnames'
 import { chatAPI } from '../services/api'
 
+const EmptyState = (props) => {
+    const suggestedTopics = [
+        {
+            title: '💕 感情探討',
+            topics: [
+                '如何判斷對方是否對你有好感？',
+                '第一次約會要注意什麼？',
+                '如何維持長期關係的新鮮感？'
+            ]
+        },
+        {
+            title: '💝 親密關係',
+            topics: [
+                '如何增進伴侶之間的親密感？',
+                '如何與伴侶討論敏感話題？',
+                '如何建立健康的感情界線？'
+            ]
+        },
+        {
+            title: '💫 戀愛心理',
+            topics: [
+                '如何克服感情中的不安全感？',
+                '如何處理感情中的吵架與衝突？',
+                '如何在感情中保持自我？'
+            ]
+        }
+    ]
+
+    return (
+        <div className="flex flex-col items-center justify-center h-full space-y-8 px-4">
+            <div className="text-center space-y-2">
+                <h2 className="text-2xl font-bold text-gray-800">歡迎來到 AI 聊天室！</h2>
+                <p className="text-gray-600">選擇以下話題開始對話，或直接輸入您感興趣的問題</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+                {suggestedTopics.map((category, index) => (
+                    <div key={index} className="bg-white rounded-lg shadow-sm p-4 space-y-3">
+                        <h3 className="font-semibold text-lg text-gray-800">{category.title}</h3>
+                        <div className="space-y-2">
+                            {category.topics.map((topic, topicIndex) => (
+                                <button
+                                    key={topicIndex}
+                                    className="w-full text-left p-2 rounded-md hover:bg-gray-50 text-gray-700 text-sm transition-colors duration-200"
+                                    onClick={() => props.onTopicSelect?.(topic)}
+                                >
+                                    {topic}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
 const ChatArea = forwardRef((props, ref) => {
     const [messages, setMessages] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -237,49 +294,53 @@ const ChatArea = forwardRef((props, ref) => {
                 className="flex-1 overflow-y-auto space-y-4 pb-4 pt-4 pr-4"
                 style={{ scrollBehavior: 'smooth' }}
             >
-                {messages.map(message => (
-                    <div
-                        key={message.id}
-                        className={classNames(
-                            'flex w-full',
-                            message.sender === 'user' ? 'justify-end' : 'justify-start'
-                        )}
-                    >
+                {messages.length === 0 ? (
+                    <EmptyState onTopicSelect={props.onTopicSelect} />
+                ) : (
+                    messages.map(message => (
                         <div
+                            key={message.id}
                             className={classNames(
-                                'p-3 rounded-lg shadow-sm',
-                                message.sender === 'user'
-                                    ? 'bg-primary-500 text-white max-w-[80%] lg:max-w-[60%]'
-                                    : 'bg-white text-gray-800 max-w-[80%] lg:max-w-[60%]'
+                                'flex w-full',
+                                message.sender === 'user' ? 'justify-end' : 'justify-start'
                             )}
                         >
-                            {message.loading ? statusMessage ?
-                                (
-                                    <div className="flex w-full justify-start">
-                                        <div className="bg-gray-100 text-gray-600 p-2 rounded-lg text-sm flex items-center space-x-2">
-                                            <span>{statusMessage}</span>
-                                            <div className="flex space-x-1">
-                                                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                                                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                                                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                            <div
+                                className={classNames(
+                                    'p-3 rounded-lg shadow-sm',
+                                    message.sender === 'user'
+                                        ? 'bg-primary-500 text-white max-w-[80%] lg:max-w-[60%]'
+                                        : 'bg-white text-gray-800 max-w-[80%] lg:max-w-[60%]'
+                                )}
+                            >
+                                {message.loading ? statusMessage ?
+                                    (
+                                        <div className="flex w-full justify-start">
+                                            <div className="bg-gray-100 text-gray-600 p-2 rounded-lg text-sm flex items-center space-x-2">
+                                                <span>{statusMessage}</span>
+                                                <div className="flex space-x-1">
+                                                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                                                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                                                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                                                </div>
                                             </div>
                                         </div>
+                                    ) :
+                                    (
+                                        <div className="flex space-x-2 justify-center">
+                                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                                        </div>
+                                    ) : (
+                                    <div className="prose prose-sm max-w-none">
+                                        <ReactMarkdown>{message.content}</ReactMarkdown>
                                     </div>
-                                ) :
-                                (
-                                    <div className="flex space-x-2 justify-center">
-                                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                                    </div>
-                                ) : (
-                                <div className="prose prose-sm max-w-none">
-                                    <ReactMarkdown>{message.content}</ReactMarkdown>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                )}
             </div>
             <div ref={messagesEndRef} />
         </div>
