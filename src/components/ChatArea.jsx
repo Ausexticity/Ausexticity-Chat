@@ -32,21 +32,23 @@ const EmptyState = (props) => {
     ]
 
     return (
-        <div className="flex flex-col items-center justify-center h-full space-y-8 px-4">
-            <div className="text-center space-y-2">
-                <h2 className="text-2xl font-bold text-gray-800">歡迎來到 AI 聊天室！</h2>
-                <p className="text-gray-600">選擇以下話題開始對話，或直接輸入您感興趣的問題</p>
+        <div className="flex flex-col items-center justify-center min-h-full p-4 md:p-8">
+            <div className="text-center space-y-2 mb-6">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800">歡迎來到感情諮詢室！</h2>
+                <p className="text-sm md:text-base text-gray-600">選擇以下話題開始對話，或直接輸入您感興趣的問題</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+            <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 {suggestedTopics.map((category, index) => (
-                    <div key={index} className="bg-white rounded-lg shadow-sm p-4 space-y-3">
-                        <h3 className="font-semibold text-lg text-gray-800">{category.title}</h3>
+                    <div key={index} className="bg-white rounded-lg shadow-sm p-4">
+                        <h3 className="font-semibold text-base md:text-lg text-gray-800 mb-3 flex items-center">
+                            <span className="mr-2">{category.title}</span>
+                        </h3>
                         <div className="space-y-2">
                             {category.topics.map((topic, topicIndex) => (
                                 <button
                                     key={topicIndex}
-                                    className="w-full text-left p-2 rounded-md hover:bg-gray-50 text-gray-700 text-sm transition-colors duration-200"
+                                    className="w-full text-left p-3 rounded-md bg-gray-50 hover:bg-gray-100 text-gray-700 text-sm transition-colors duration-200"
                                     onClick={() => props.onTopicSelect?.(topic)}
                                 >
                                     {topic}
