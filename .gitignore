@@ -35,3 +35,6 @@ dist-ssr
 
 # npm
 build
+
+# tool
+deploy.sh
